@@ -6,8 +6,13 @@ import {
     Link
   } from "react-router-dom";
 import axios from 'axios';
+import { ProvideAuth } from "./ProvideAuth";
+import PrivateRoute from "./PrivateRoute";
+
 import GifViewer from "./GifViewer";
 import Navi from "./Navi";
+import LoginPage from "./LoginPage";
+
 
 function App() {
     const [gifs, setGifs] = useState([]);
@@ -45,34 +50,41 @@ function App() {
     }
 
     return (
-        <Router>
-            <div>
-                <Navi />
+        <ProvideAuth>
+            <Router>
+                <div>
+                    <Navi />
 
-                <Switch>
-                    <Route path='/saved'>              
-                        <GifViewer 
-                            gifs={savedGifs}
-                            buttonAction={handleRemoveGif}
-                            buttonText={'remove'}
-                        />
-                    </Route>
-                    <Route path='/search'>
-                        <input onChange={handleInput} value={gifInput}/>
-                        <button onClick={handleSearchGifs}>search</button>
-                        <GifViewer 
-                            gifs={gifs}
-                            buttonAction={handleSavedGif}
-                            buttonText={'save'}
-                        />
-                    </Route>
-                    <Route path='/'>
-                        <h1>HomePage</h1>
-                    </Route>
-                </Switch>
+                    <Switch>
+                        <PrivateRoute path='/saved'>              
+                            <GifViewer 
+                                gifs={savedGifs}
+                                buttonAction={handleRemoveGif}
+                                buttonText={'remove'}
+                            />
+                        </PrivateRoute>
+                        <PrivateRoute path='/search'>
+                            <input onChange={handleInput} value={gifInput}/>
+                            <button onClick={handleSearchGifs}>search</button>
+                            <GifViewer 
+                                gifs={gifs}
+                                buttonAction={handleSavedGif}
+                                buttonText={'save'}
+                            />
+                        </PrivateRoute>
 
-            </div>
-        </Router>
+                        <Route path='/login' exact>
+                            <LoginPage />
+                        </Route>
+
+                        <Route path='/'>
+                            <h1>HomePage</h1>
+                        </Route>
+                    </Switch>
+
+                </div>
+            </Router>
+        </ProvideAuth>
     )
 };
 
