@@ -23,6 +23,11 @@ function App() {
         const savedGifs = localStorage.getItem('savedGifs');
         // saved in local storage as a JSON string - so need to parse it
         if (savedGifs) setSavedGifs(JSON.parse(savedGifs));
+        // get data being sent from server
+        axios.get('/get').then((res) => {
+            console.log(res);
+        })
+
     }, []); // run useEffect once only when page loads
 
     const handleInput = (event) => {
