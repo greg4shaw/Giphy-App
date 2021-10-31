@@ -27,26 +27,26 @@ const PORT = 3001;
 app.use(express.urlencoded());
 
 //Create
-app.post('/post', (req, res) => {
+app.post('/gifs', (req, res) => {
     db.data.gifs.push({id: uuidv4(), url: req.body.url})
     db.write();
     res.send('added')
 });
 
-app.get('/read', (req, res) => {
+app.get('/gifs', (req, res) => {
     res.json(db.data.gifs)
 });
 
 //Update
-app.get('/update/:id/:url', (req, res) => {
+app.put('/gifs/:id', (req, res) => {
     const recordToUpdate = db.data.gifs.find((gif) => gif.id === req.params.id)
-    recordToUpdate.url = req.params.url
+    recordToUpdate.url = req.body.url
     db.write();
     res.send(`edited ${req.params.id}`)
 });
 
 
-app.get('/delete/:id', (req, res) => {
+app.delete('/delete/:id', (req, res) => {
     db.data.gifs = db.data.gifs.filter((gif) => gif.id !== req.params.id)
     db.write();
     res.send(`removed ${req.params.id}`)
