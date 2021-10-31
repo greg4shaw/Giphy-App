@@ -1,12 +1,11 @@
-//const express = require('express');
-import express from 'express';
-
+import express from 'express'
 // LOWDB
 import path from 'path'
 import { Low, JSONFile } from 'lowdb'
 // import { fileURLToPath } from 'url'
 import { v4 as uuidv4 } from 'uuid'; 
 
+const router = express.Router()
 
 // Use JSON file for storage
 const file = path.join(path.resolve(), 'db.json')
@@ -15,44 +14,34 @@ const db = new Low(adapter)
 
 await db.read();
 
-// If file.json doesn't exist, db.data will be null
-// Set default data // If no DB exists make a new array
-if(!db.data) db.data = { gifs: [] }
-
-const app = express();
-const PORT = 3001;
-
-//const someArray = [{name: 'Tim', age: 27, job: "software developer"}]
-// use body to read the data from postman which doesnt have to be part of the URL
-app.use(express.urlencoded());
-
+// CRUD
 //Create
-app.post('/gifs', (req, res) => {
+router.post('/', (req, res) => {
     db.data.gifs.push({id: uuidv4(), url: req.body.url})
     db.write();
     res.send('added')
 });
 
-app.get('/gifs', (req, res) => {
+// READ
+router.get('/', (req, res) => {
+    console.log('working')
     res.json(db.data.gifs)
 });
 
 //Update
-app.put('/gifs/:id', (req, res) => {
+router.put('/:id', (req, res) => {
     const recordToUpdate = db.data.gifs.find((gif) => gif.id === req.params.id)
     recordToUpdate.url = req.body.url
     db.write();
     res.send(`edited ${req.params.id}`)
 });
 
+// DELETE
 
-app.delete('/delete/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
     db.data.gifs = db.data.gifs.filter((gif) => gif.id !== req.params.id)
     db.write();
     res.send(`removed ${req.params.id}`)
 });
 
-
-app.listen(PORT, () => {
-    console.log(`Listening on port: ${PORT}`)
-});
+export default router;
