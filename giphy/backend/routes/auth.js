@@ -2,18 +2,14 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
 
+import User from '../models/User.js';
+
 const router = express.Router()
 
 const accessTokenSecret = 'somerandomaccesstoken';
 const refreshTokenSecret = 'somerandomstringforrefreshtoken';
 const refreshTokens = [];
 
-const users = [
-    {
-        username: 'tim',
-        password: 'timpass'
-    }
-]
 // AUTH ROUTES
 
 router.post('/login', (req, res) => {
@@ -21,13 +17,13 @@ router.post('/login', (req, res) => {
     console.log(req.body)
     const { username, password } = req.body;
 
-    // filter user from the users array by username and password
-    const user = users.find(u => { return u.username === username && u.password === password });
-
-    if (user) {
-        // generate an access token
-        const accessToken = jwt.sign({ username: user.username, role: user.role }, accessTokenSecret, { expiresIn: '120m' });
-        const refreshToken = jwt.sign({ username: user.username, role: user.role }, refreshTokenSecret);
+    User.findOne({username: username, password: password}, (err, user) => {
+        if(err || !user) {
+            console.log(err);
+            res.send('Username or password incorrect');
+        } else {
+        const accessToken = jwt.sign({ id: user._id, username: user.username}, accessTokenSecret, { expiresIn: '120m' });
+        const refreshToken = jwt.sign({ id: user._id, username: user.username}, refreshTokenSecret);
 
         refreshTokens.push(refreshToken);
 
@@ -35,9 +31,8 @@ router.post('/login', (req, res) => {
             accessToken,
             refreshToken
         });
-    } else {
-        res.send('Username or password incorrect');
-    }
+        }
+    })
 });
 
 router.post('/token', (req, res) => {

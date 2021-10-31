@@ -1,30 +1,16 @@
 //const express = require('express');
 import express from 'express';
 import jwt from 'jsonwebtoken';
-
-// LOWDB
-import path from 'path'
-import { Low, JSONFile } from 'lowdb'
-// import { fileURLToPath } from 'url'
-import { v4 as uuidv4 } from 'uuid'; 
+import mongoose from 'mongoose';
 
 import gifRouter from './routes/gifs.js'
 import authRouter from './routes/auth.js'
 
-// Use JSON file for storage
-const file = path.join(path.resolve(), 'db.json')
-const adapter = new JSONFile(file)
-const db = new Low(adapter)
-
-// MIDDLEWARE @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-// FROM OLD AUTH.js FILE
 const accessTokenSecret = 'somerandomaccesstoken';
 
-await db.read();
+mongoose.connect('mongodb+srv://admin:admin@cluster0.xdi5v.mongodb.net/gifsDB?retryWrites=true&w=majority');
 
-// If file.json doesn't exist, db.data will be null
-// Set default data // If no DB exists make a new array
-if(!db.data) db.data = { gifs: [] }
+// MIDDLEWARE @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 
 const authenticateJWT = (req, res, next) => {
     const authHeader = req.headers.authorization;
@@ -57,13 +43,35 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/auth', authRouter )
 app.use('/gifs', authenticateJWT, gifRouter )
 
-
 // DEFAULT
 app.get('/', (req, res) => {
     res.send('Login to access API')
 });
 
-
 app.listen(PORT, () => {
     console.log(`Listening on port: ${PORT}`)
 });
+
+
+
+
+// LOWDB CODE REMOVED
+
+// import { Low, JSONFile } from 'lowdb'
+// // import { fileURLToPath } from 'url'
+// import { v4 as uuidv4 } from 'uuid'; 
+
+// // LOWDB
+// import path from 'path'
+
+// // Use JSON file for storage
+// const file = path.join(path.resolve(), 'db.json')
+// const adapter = new JSONFile(file)
+// const db = new Low(adapter)
+
+
+// await db.read();
+
+// // If file.json doesn't exist, db.data will be null
+// // Set default data // If no DB exists make a new array
+// if(!db.data) db.data = { gifs: [] }

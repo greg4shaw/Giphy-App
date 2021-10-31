@@ -1,47 +1,80 @@
 import express from 'express'
-// LOWDB
-import path from 'path'
-import { Low, JSONFile } from 'lowdb'
-// import { fileURLToPath } from 'url'
 import { v4 as uuidv4 } from 'uuid'; 
+import Gif from '../models/Gif.js';
 
 const router = express.Router()
-
-// Use JSON file for storage
-const file = path.join(path.resolve(), 'db.json')
-const adapter = new JSONFile(file)
-const db = new Low(adapter)
-
-await db.read();
 
 // CRUD
 //Create
 router.post('/', (req, res) => {
-    db.data.gifs.push({id: uuidv4(), url: req.body.url})
-    db.write();
-    res.send('added')
+    //console.log(req.user)
+    Gif.create({ user: req.user.id, url: req.body.url }, (err, gif) => {
+        if (err) {
+            console.log(err);
+            res.send('creation error')
+        } else {
+            res.send('successful create');
+        }
+    })
 });
 
 // READ
 router.get('/', (req, res) => {
-    console.log('working')
-    res.json(db.data.gifs)
+    Gif.find({ user: req.user.id },(err, gifs) => {
+        if (err) {
+            console.log(err);
+            res.send('read error')
+        } else {
+            console.log(gifs);
+            res.send(gifs);
+        }
+    })
 });
 
-//Update
+//UPDATE
 router.put('/:id', (req, res) => {
-    const recordToUpdate = db.data.gifs.find((gif) => gif.id === req.params.id)
-    recordToUpdate.url = req.body.url
-    db.write();
-    res.send(`edited ${req.params.id}`)
+    console.log(req.params.id)
+    Gif.findByIdAndUpdate(req.params.id, { url: req.body.url }, (err, result) => {
+        if (err) {
+            console.log(err);
+            res.send('update error')
+        } else {
+            console.log(result);
+            res.send('successful update');
+        }        
+    })
 });
 
 // DELETE
 
 router.delete('/:id', (req, res) => {
-    db.data.gifs = db.data.gifs.filter((gif) => gif.id !== req.params.id)
-    db.write();
-    res.send(`removed ${req.params.id}`)
+    Gif.findByIdAndDelete(req.params.id, (err, result) => {
+        if (err) {
+            console.log(err);
+            res.send('delete error')
+        } else {
+            console.log(result);
+            res.send('successful delete');
+        }        
+    })
 });
 
 export default router;
+
+
+
+// LOWDB REMOVED
+
+
+// // Use JSON file for storage
+// const file = path.join(path.resolve(), 'db.json')
+// const adapter = new JSONFile(file)
+// const db = new Low(adapter)
+
+// await db.read();
+
+// // LOWDB
+// import path from 'path'
+// import { Low, JSONFile } from 'lowdb'
+// // import { fileURLToPath } from 'url'
+// import { v4 as uuidv4 } from 'uuid'; 
