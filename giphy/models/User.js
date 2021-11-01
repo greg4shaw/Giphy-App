@@ -7,7 +7,8 @@ const UserSchema = new mongoose.Schema({
         unique: true
     },
     password: String,
-    gifs: [{type: mongoose.Schema.Types.ObjectId, ref: 'Gif'}]
+    gifs: [{type: mongoose.Schema.Types.ObjectId, ref: 'Gif'}],
+    values: [{type: mongoose.Schema.Types.ObjectId, ref: 'Amount'}]
 })
 
 UserSchema.pre("save", function (next) {

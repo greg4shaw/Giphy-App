@@ -5,6 +5,7 @@ import mongoose from 'mongoose';
 //import dotenv from 'dotenv';
 import { URL } from 'url';
 
+import valueRouter from './routes/values.js'
 import gifRouter from './routes/gifs.js'
 import authRouter from './routes/auth.js'
 import authenticateJWT from './middleware/authenticateJWT.js'
@@ -22,6 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 // Passing in our gif routes & the JWT token here only
 app.use('/auth', authRouter )
 app.use('/gifs', authenticateJWT, gifRouter )
+app.use('/values', authenticateJWT, valueRouter )
 
 // GETTING SERVER TO SERVE FRONT END REACT FILES
 

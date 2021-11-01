@@ -1,15 +1,16 @@
 import { Collapse,Navbar, NavbarBrand, Nav, NavItem, NavLink } from 'reactstrap';
 import { Link, useHistory } from "react-router-dom";
-import { useAuth } from './ProvideAuth';
+import { ProvideAuth, useAuth } from './ProvideAuth';
 
 function Navi() {
   let history = useHistory();
   let auth = useAuth();
-
+  // let { auth2 } = ProvideAuth();
+  //console.log(signin.username)
 
   return(
     <Navbar color="light" light expand="md">
-    <NavbarBrand tag={Link} to='/'>Giphy</NavbarBrand>
+    <NavbarBrand tag={Link} to='/'>Bad Bank</NavbarBrand>
     <Collapse isOpen={true} navbar>
       <Nav className="mr-auto" navbar>
         <NavItem>
@@ -19,12 +20,24 @@ function Navi() {
           <NavLink tag={Link} to='/saved'>Saved</NavLink>
         </NavItem>
         <NavItem>
+          <NavLink tag={Link} to='/deposit'>Deposit</NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink tag={Link} to='/withdraw'>Withdraw</NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink tag={Link} to='/signup'>Create Account</NavLink>
+        </NavItem>
+        <NavItem>
           {auth.user ? 
             <NavLink onClick={() => {
               auth.signout(() => history.push('/'))
             }}>Log Out</NavLink> :
             <NavLink tag={Link} to='/login'>Log In</NavLink>
           }
+        </NavItem>
+        <NavItem>
+          <NavLink>{auth.displayName}</NavLink>
         </NavItem>
       </Nav>
     </Collapse>

@@ -3,16 +3,20 @@ import axios from 'axios';
 
 function useProvideAuth() {
     const [user, setUser] = useState(null);
-  
+    const [displayName, setDisplayName] = useState(null);
+
     const signin = (username, password) => {
       return axios.post('auth/login', { username, password }).then((res) => {
         setUser(res.data.accessToken);
+        setDisplayName(username)
+        console.log(username)
       })
     };
   
     const signout = () => {
       return axios.post('auth/logout', {token: user }).then(() => {
         setUser(null);
+        setDisplayName(null)
       })
     };
 
@@ -20,11 +24,20 @@ function useProvideAuth() {
       return { Authorization: `Bearer ${user}`}
     }
   
+    const signup = (username, password) => {
+      return axios.post('auth/signup', { username, password }).then((res) => {
+        setUser(res.data.accessToken);
+      })
+    };
+
+
     return {
       user,
       signin,
       signout,
-      authHeader
+      authHeader,
+      signup,
+      displayName
     };
   }
 

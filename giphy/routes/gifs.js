@@ -38,6 +38,7 @@ router.get('/', (req, res) => {
 //https://api.giphy.com/v1/gifs/search?api_key=o5Njzr7fPXxqk7r11TGllOa0Cqj9vMgG&q=${input}&limit=10
 router.get('/search', (req,res) => {
     console.log(process.env.GIPHY_KEY)
+    //axios.get(`https://api.giphy.com/v1/gifs/search?&q=${req.query.input}&api_key=o5Njzr7fPXxqk7r11TGllOa0Cqj9vMgG&q&rating=g&limit=10`).then((giphyRes) => {
     axios.get(`https://api.giphy.com/v1/gifs/search?&q=${req.query.input}&api_key=${process.env.GIPHY_KEY}&rating=g&limit=10`).then((giphyRes) => {
         res.json(giphyRes.data.data)
     }).catch((err) => {
