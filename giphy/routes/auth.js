@@ -3,12 +3,17 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 
 import User from '../models/User.js';
+// DIFFERENCE
+import dotenv from 'dotenv';
+dotenv.config();
 
 const router = express.Router()
 
-const accessTokenSecret = 'somerandomaccesstoken';
-const refreshTokenSecret = 'somerandomstringforrefreshtoken';
+const accessTokenSecret = process.env.JWT_SECRET;
+const refreshTokenSecret = process.env.JWT_REFRESH;
 let refreshTokens = [];
+// console.log(process.env.JWT_SECRET)
+// console.log(process.env.JWT_REFRESH)
 
 // AUTH ROUTES
 

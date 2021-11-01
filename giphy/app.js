@@ -1,42 +1,15 @@
 //const express = require('express');
 import express from 'express';
-import jwt from 'jsonwebtoken';
+//import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
+//import dotenv from 'dotenv';
 
 import gifRouter from './routes/gifs.js'
 import authRouter from './routes/auth.js'
-
-dotenv.config();
-const accessTokenSecret = 'somerandomaccesstoken';
-
-console.log(process.env.MONGO_STRING)
+import authenticateJWT from './middleware/authenticateJWT.js'
+//dotenv.config();
+//console.log(process.env.MONGO_STRING)
 mongoose.connect(process.env.MONGO_STRING, { useNewUrlParser: true});
-
-// mongodb+srv://admin:admin@cluster0.xdi5v.mongodb.net/gifsDB?retryWrites=true&w=majority
-
-// MIDDLEWARE @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
-const authenticateJWT = (req, res, next) => {
-    const authHeader = req.headers.authorization;
-    console.log(`Headers: ${JSON.stringify(req.headers)}`);
-    console.log(`Body: ${JSON.stringify(req.body)}`);
-    if (authHeader) {
-        const token = authHeader.split(' ')[1];
-
-        jwt.verify(token, accessTokenSecret, (err, user) => {
-            if (err) {
-                return res.sendStatus(403);
-            }
-
-            req.user = user;
-            next();
-        });
-    } else {
-        res.sendStatus(401);
-    }
-}
-
 
 const app = express();
 // below process.env is used because we are using Heroku to deploy

@@ -10,11 +10,15 @@ function SearchPage() {
   const [gifs, setGifs] = useState([]);
 
   const handleSearch = () => {
-    console.log(input);
+    //console.log(input);
     if (!input) return;
 
-    axios.get(`https://api.giphy.com/v1/gifs/search?api_key=o5Njzr7fPXxqk7r11TGllOa0Cqj9vMgG&q=${input}&limit=10`).then((res) => {
-        setGifs(res.data.data);
+    // https://api.giphy.com/v1/gifs/search?api_key=o5Njzr7fPXxqk7r11TGllOa0Cqj9vMgG&q=${input}&limit=10
+    axios.get(`gifs/search?input=${input}`, {headers: auth.authHeader()}).then((res) => {
+        console.log('new endpoint works')
+        setGifs(res.data);
+      }).catch((err) => {
+        console.log(err)
       });
   };
 

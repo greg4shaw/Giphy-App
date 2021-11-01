@@ -1,5 +1,9 @@
 import express from 'express'
 import Gif from '../models/Gif.js';
+import axios from 'axios'
+// DIFFERENCE
+import dotenv from 'dotenv';
+dotenv.config();
 
 const router = express.Router()
 
@@ -29,6 +33,18 @@ router.get('/', (req, res) => {
         }
     })
 });
+
+//SEARCH - for backend to get GIHPY API key
+//https://api.giphy.com/v1/gifs/search?api_key=o5Njzr7fPXxqk7r11TGllOa0Cqj9vMgG&q=${input}&limit=10
+router.get('/search', (req,res) => {
+    console.log(process.env.GIPHY_KEY)
+    axios.get(`https://api.giphy.com/v1/gifs/search?&q=${req.query.input}&api_key=${process.env.GIPHY_KEY}&rating=g&limit=10`).then((giphyRes) => {
+        res.json(giphyRes.data.data)
+    }).catch((err) => {
+        console.log(err);
+        res.status(500);
+    })
+})
 
 //UPDATE
 router.put('/:id', (req, res) => {
