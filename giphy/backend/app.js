@@ -37,6 +37,7 @@ const app = express();
 // below process.env is used because we are using Heroku to deploy
 const PORT = process.env.PORT || 3001;
 
+app.use(express.json());
 // use body to read the data from postman which doesnt have to be part of the URL
 app.use(express.urlencoded({ extended: true }));
 // Passing in our gif routes & the JWT token here only

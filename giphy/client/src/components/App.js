@@ -2,16 +2,16 @@ import { useEffect, useState } from "react";
 import {
     BrowserRouter as Router,
     Switch,
-    Route,
-    Link
+    Route
   } from "react-router-dom";
 import axios from 'axios';
+
 import { ProvideAuth } from "./ProvideAuth";
 import PrivateRoute from "./PrivateRoute";
-
-import GifViewer from "./GifViewer";
-import Navi from "./Navi";
 import LoginPage from "./LoginPage";
+import SearchPage from "./SearchPage";
+import SavedPage from "./SavedPage";
+import Navi from "./Navi";
 
 
 function App() {
@@ -24,9 +24,9 @@ function App() {
         // saved in local storage as a JSON string - so need to parse it
         if (savedGifs) setSavedGifs(JSON.parse(savedGifs));
         // get data being sent from server
-        axios.get('/get').then((res) => {
-            console.log(res);
-        })
+        // axios.get('/get').then((res) => {
+        //     console.log(res);
+        // })
 
     }, []); // run useEffect once only when page loads
 
@@ -62,20 +62,11 @@ function App() {
 
                     <Switch>
                         <PrivateRoute path='/saved'>              
-                            <GifViewer 
-                                gifs={savedGifs}
-                                buttonAction={handleRemoveGif}
-                                buttonText={'remove'}
-                            />
+                            <SavedPage />
                         </PrivateRoute>
+
                         <PrivateRoute path='/search'>
-                            <input onChange={handleInput} value={gifInput}/>
-                            <button onClick={handleSearchGifs}>search</button>
-                            <GifViewer 
-                                gifs={gifs}
-                                buttonAction={handleSavedGif}
-                                buttonText={'save'}
-                            />
+                            <SearchPage />
                         </PrivateRoute>
 
                         <Route path='/login' exact>

@@ -8,19 +8,19 @@ const router = express.Router()
 
 const accessTokenSecret = 'somerandomaccesstoken';
 const refreshTokenSecret = 'somerandomstringforrefreshtoken';
-const refreshTokens = [];
+let refreshTokens = [];
 
 // AUTH ROUTES
 
 router.post('/login', (req, res) => {
     // read username and password from request body
-    console.log(req.body)
     const { username, password } = req.body;
+    console.log(req.body)
 
     User.findOne({username: username, password: password}, (err, user) => {
         if(err || !user) {
-            console.log(err);
-            res.send('Username or password incorrect');
+            console.log('Auth/Sign in error' + err);
+            res.sendStatus(401);
         } else {
         const accessToken = jwt.sign({ id: user._id, username: user.username}, accessTokenSecret, { expiresIn: '120m' });
         const refreshToken = jwt.sign({ id: user._id, username: user.username}, refreshTokenSecret);
@@ -51,7 +51,7 @@ router.post('/token', (req, res) => {
             return res.sendStatus(403);
         }
 
-        const accessToken = jwt.sign({ username: user.username, role: user.role }, accessTokenSecret, { expiresIn: '20m' });
+        const accessToken = jwt.sign({ username: user.username}, accessTokenSecret, { expiresIn: '20m' });
 
         res.json({
             accessToken
@@ -61,7 +61,7 @@ router.post('/token', (req, res) => {
 
 router.post('/logout', (req, res) => {
     const { token } = req.body;
-    refreshTokens = refreshTokens.filter(token => t !== token);
+    refreshTokens = refreshTokens.filter(t => t !== token);
 
     res.send("Logout successful");
 });
