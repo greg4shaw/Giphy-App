@@ -3,6 +3,7 @@ import express from 'express';
 //import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 //import dotenv from 'dotenv';
+import { URL } from 'url';
 
 import gifRouter from './routes/gifs.js'
 import authRouter from './routes/auth.js'
@@ -22,9 +23,17 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/auth', authRouter )
 app.use('/gifs', authenticateJWT, gifRouter )
 
-// DEFAULT
-app.get('/', (req, res) => {
-    res.send('Login to access API')
+// GETTING SERVER TO SERVE FRONT END REACT FILES
+
+// creating the build files and saving them under client
+app.use(express.static(new URL('./client/build', import.meta.url).pathname))
+
+//console.log(new URL('./client/build', import.meta.url).pathname)
+
+// DEFAULT - any end point that is hit that is not /auth or /gifs then send a file back
+// this is the index.html file created when the build is done so it wont do anything locally
+app.get('*', (req, res) => {
+    res.sendFile(new URL('./client/index.html', import.meta.url).pathname)
 });
 
 app.listen(PORT, () => {
