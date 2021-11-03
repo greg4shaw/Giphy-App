@@ -30,7 +30,6 @@ function useProvideAuth() {
       })
     };
 
-
     return {
       user,
       signin,
@@ -42,19 +41,3 @@ function useProvideAuth() {
   }
 
   export default useProvideAuth;
-
-
-// OLD FAKE AUTH
-
-
-// const fakeAuth = {
-//   isAuthenticated: false,
-//   signin(cb) {
-//     fakeAuth.isAuthenticated = true;
-//     setTimeout(cb, 100); // fake async
-//   },
-//   signout(cb) {
-//     fakeAuth.isAuthenticated = false;
-//     setTimeout(cb, 100);
-//   }
-// };

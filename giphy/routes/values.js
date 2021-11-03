@@ -1,66 +1,68 @@
 import express from 'express'
-import Amount from '../models/Amount.js';
-// import axios from 'axios'
-// // DIFFERENCE
-// import dotenv from 'dotenv';
-// dotenv.config();
+import User from '../models/User.js';
 
 const router = express.Router()
 
-// CRUD
-//Create
-router.post('/', (req, res) => {
-    //console.log(req.user)
-    Amount.create({ user: req.user.id, value: req.body.value }, (err, value) => {
-        if (err) {
-            console.log(err);
-            res.send('value creation error')
-        } else {
-            res.send('successful value add');
-        }
-    })
-});
-
 // READ
 router.get('/', (req, res) => {
-    Amount.find( { user: req.user.id }, (err, values) => {
+    User.findById( req.user.id , (err, values) => {
         if (err) {
-            console.log(err);
             res.send('read value error')
         } else {
-            console.log(values);
             res.send(values);
         }
     })
 });
 
 //UPDATE
-router.put('/', (req, res) => {
-    //     Amount.findByIdAndUpdate(req.user.id, { value: (value + req.body.value) }, (err, result) => {
-    //     if (err) {
-    //         console.log(err);
-    //         res.send('update value error')
-    //     } else {
-    //         console.log(result);
-    //         console.log(value);
-    //         res.send('successful value update');
-    //     }        
-    // })
+router.post('/update', (req, res) => {
+    User.findByIdAndUpdate(req.user.id, { balance: req.body.balance }, (err, result) => {
+        if (err) {
+            res.send('update error')
+        } else {
+            res.send('successful update');
+        }        
+    })
 });
 
 // // DELETE
+router.delete('/delete', (req, res) => {
+    User.findByIdAndDelete(req.user.id, (err, result) => {
+        if (err) {
+            res.send('delete error')
+        } else {
+            res.send('successful delete');
+        }        
+    })
+});
 
-// router.delete('/:id', (req, res) => {
-//     Gif.findByIdAndDelete(req.params.id, (err, result) => {
+export default router;
+
+// //Create
+// router.post('/', (req, res) => {
+//     console.log('ROUTE ' + req.body.username)
+//     //User.create({ user: req.user.id, balance: req.body.value }, (err, value) => {
+//     User.findOneAndUpdate({ username: req.username.id }, { balance: 99 }, (err, value) => {
 //         if (err) {
 //             console.log(err);
-//             res.send('delete error')
+//             res.send('value creation error')
 //         } else {
-//             console.log(result);
-//             res.send('successful delete');
-//         }        
+//             res.send('successful value add');
+//             console.log(req.user.id)
+//         }
 //     })
 // });
 
-export default router;
+// // REPLACE
+
+// router.post('/replace', (req, res) => {
+// User.replaceOne({ user: req.user.id, value: req.body.value }, (err, value) => {
+//     if (err) {
+//         console.log(err);
+//         res.send('value creation error')
+//     } else {
+//         res.send('successful value add');
+//     }
+// })
+// });
 

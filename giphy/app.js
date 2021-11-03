@@ -41,27 +41,3 @@ app.get('*', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Listening on port: ${PORT}`)
 });
-
-
-
-
-// LOWDB CODE REMOVED
-
-// import { Low, JSONFile } from 'lowdb'
-// // import { fileURLToPath } from 'url'
-// import { v4 as uuidv4 } from 'uuid'; 
-
-// // LOWDB
-// import path from 'path'
-
-// // Use JSON file for storage
-// const file = path.join(path.resolve(), 'db.json')
-// const adapter = new JSONFile(file)
-// const db = new Low(adapter)
-
-
-// await db.read();
-
-// // If file.json doesn't exist, db.data will be null
-// // Set default data // If no DB exists make a new array
-// if(!db.data) db.data = { gifs: [] }

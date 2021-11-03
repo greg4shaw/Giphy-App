@@ -14,6 +14,7 @@ function Card(props) {
         {props.title && <h5 className="card-title">{props.title}</h5>}
         {props.text && <p className="card-text">{props.text}</p>}
         {props.body}
+        <br/>
         {props.status && <div id="createStatus">{props.status}</div>}
       </div>
     </div>

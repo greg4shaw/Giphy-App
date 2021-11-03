@@ -7,6 +7,7 @@ const UserSchema = new mongoose.Schema({
         unique: true
     },
     password: String,
+    balance: Number,
     gifs: [{type: mongoose.Schema.Types.ObjectId, ref: 'Gif'}],
     values: [{type: mongoose.Schema.Types.ObjectId, ref: 'Amount'}]
 })

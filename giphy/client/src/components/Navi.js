@@ -5,8 +5,6 @@ import { ProvideAuth, useAuth } from './ProvideAuth';
 function Navi() {
   let history = useHistory();
   let auth = useAuth();
-  // let { auth2 } = ProvideAuth();
-  //console.log(signin.username)
 
   return(
     <Navbar color="light" light expand="md">
@@ -29,6 +27,9 @@ function Navi() {
           <NavLink tag={Link} to='/signup'>Create Account</NavLink>
         </NavItem>
         <NavItem>
+          <NavLink tag={Link} to='/delete'>Delete Account</NavLink>
+        </NavItem>
+        <NavItem>
           {auth.user ? 
             <NavLink onClick={() => {
               auth.signout(() => history.push('/'))
@@ -37,7 +38,7 @@ function Navi() {
           }
         </NavItem>
         <NavItem>
-          <NavLink>{auth.displayName}</NavLink>
+          <NavLink>{(!auth.displayName) ? '' : `CURRENT USER: ${auth.displayName}`} </NavLink>
         </NavItem>
       </Nav>
     </Collapse>

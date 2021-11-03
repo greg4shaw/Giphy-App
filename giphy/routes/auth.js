@@ -1,9 +1,7 @@
 //const express = require('express');
 import express from 'express';
 import jwt from 'jsonwebtoken';
-
 import User from '../models/User.js';
-// DIFFERENCE
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -12,18 +10,12 @@ const router = express.Router()
 const accessTokenSecret = process.env.JWT_SECRET;
 const refreshTokenSecret = process.env.JWT_REFRESH;
 let refreshTokens = [];
-// console.log(process.env.JWT_SECRET)
-// console.log(process.env.JWT_REFRESH)
 
 // AUTH ROUTES
 
 // LOGIN ROUTE
-
 router.post('/login', (req, res) => {
-    // read username and password from request body
     const { username, password } = req.body;
-    //console.log(req.body)
-
     User.findOne({ username: username }, (err, user) => {
         if(err || !user) {
             console.log('Auth/Sign in error' + err);
@@ -90,6 +82,7 @@ router.post('/logout', (req, res) => {
 
 router.post('/signup', (req, res) => {
     const { username, password } = req.body;
+    const balance = 0;
     
     User.findOne({username: username}).then((user) => {
         if(user) {
@@ -97,13 +90,33 @@ router.post('/signup', (req, res) => {
         } else {
             User.create({
                 username,
-                password
+                password,
+                balance
             })
-
             res.status(200).json('user created');
         }
     })
 });
+
+// // UPDATE ROUTE
+
+// router.post('/update', (req, res) => {
+//     const { deposit } = req.body;
+    
+//     User.findOne({ username: req.username.id }).then((user) => {
+//     //User.findOne({username: username}).then((user) => {
+//         if(user) {
+//             //console.log('FOUND: ' + username)
+//             //console.log('DEPOSIT: ' + deposit)
+//             User.replaceOne({
+//                 balance: deposit
+//             })
+//         } else {
+//             res.status(500).json('user does not exists');
+//             }
+//         })
+//     })
+
 
 
 export default router;

@@ -1,7 +1,6 @@
 import express from 'express'
 import Gif from '../models/Gif.js';
 import axios from 'axios'
-// DIFFERENCE
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -62,7 +61,6 @@ router.put('/:id', (req, res) => {
 });
 
 // DELETE
-
 router.delete('/:id', (req, res) => {
     Gif.findByIdAndDelete(req.params.id, (err, result) => {
         if (err) {
@@ -76,21 +74,3 @@ router.delete('/:id', (req, res) => {
 });
 
 export default router;
-
-
-
-// LOWDB REMOVED
-
-
-// // Use JSON file for storage
-// const file = path.join(path.resolve(), 'db.json')
-// const adapter = new JSONFile(file)
-// const db = new Low(adapter)
-
-// await db.read();
-
-// // LOWDB
-// import path from 'path'
-// import { Low, JSONFile } from 'lowdb'
-// // import { fileURLToPath } from 'url'
-// import { v4 as uuidv4 } from 'uuid'; 
