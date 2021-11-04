@@ -55,13 +55,5 @@ function LoginPage() {
             )
         }
 
-    // return (
-    //   <div>
-    //     <input placeholder='username' value={username} onChange={(e) => setUsername(e.target.value)} />
-    //     <input placeholder='password' value={password} type="password" onChange={(e) => setPassword(e.target.value)} />
-    //     <button onClick={login}>Log in</button>
-    //   </div>
-    // );
-
 export default LoginPage;
   

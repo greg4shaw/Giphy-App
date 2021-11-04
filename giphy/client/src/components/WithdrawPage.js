@@ -5,7 +5,7 @@ import Card from "./Card";
 import axios from "axios";
 
 function WithdrawPage() {
-    const [withdraw, setWithdraw] = useState([])
+    const [withdraw, setWithdraw] = useState('')
     const [bal, setBal] = useState('')
     const [show, setShow] = useState(true);
     const [status, setStatus] = useState("");
@@ -52,6 +52,7 @@ function WithdrawPage() {
                 console.log(err)
               });
               getBalance();
+              setShow(false);
       };
 
       useEffect(() => {
@@ -60,7 +61,7 @@ function WithdrawPage() {
 
     const getBalance = () => {
         axios.get('values', {headers: auth.authHeader() }).then((res) => {
-              setBal(res.data.balance)
+            setBal(parseFloat(res.data.balance).toFixed(2))
             }).catch((err) => {
             console.log(err)
           });
@@ -79,7 +80,7 @@ function WithdrawPage() {
               Withdraw Amount
               <br />
               <br />
-              <input type="input" className="form-control" id="deposit" placeholder="Deposit Amount"
+              <input type="input" className="form-control" id="deposit" placeholder="Give me money!"
                 value={withdraw} onChange={(e) => setWithdraw(e.target.value)}
               />
               <br />

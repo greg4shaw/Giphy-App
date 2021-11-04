@@ -16,12 +16,12 @@ function DeleteAccount() {
     let { from } = location.state || { from: { pathname: "/" } };
     
     const handleDelete = () => {
-         axios.delete('/values/delete', { headers: auth.authHeader() }).then((res) => {
+        axios.delete('/values/delete', { headers: auth.authHeader() }).then((res) => {
               }).catch((err) => {
                 setStatus("This is not a valid account so it cannot be deleted.")
               });
-              setShow(false)
-              setStatus('');
+        setShow(false)
+        setStatus('');
       };
 
   return (
@@ -52,7 +52,7 @@ function DeleteAccount() {
             <h5>Your account has been deleted, we are sad to see you go :(</h5>
             <br />
             <button type="submit" className="btn btn-light mx-auto d-block"
-              onClick={()=> history.push("/signup")}>
+              onClick={auth.signout(() => history.push('/signup'))}>
               Create a new account
             </button>
           </>

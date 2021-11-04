@@ -6,6 +6,7 @@ import axios from "axios";
 
 function DepositPage() {
     const [deposit, setDeposit] = useState('')
+    const [bonus, setBonus] = useState(0)
     const [bal, setBal] = useState('')
     const [show, setShow] = useState(true);
     const [status, setStatus] = useState("");
@@ -33,24 +34,47 @@ function DepositPage() {
       return false;
     }
 
-    const handleDeposit = () => {
+    useEffect(() => {
+      getBalance();
+      }, [])
+
+    const handleDeposit = () => {     
       if (!validateDeposit(deposit, "deposit")) return;
-      const newbal = Number(bal) + Number(deposit)
-         axios.post('/values/update', {balance: newbal}, { headers: auth.authHeader() }).then((res) => {
-              }).catch((err) => {
-                console.log(err)
-              });
-              getBalance();
-              setShow(false);
-      };
+      if(deposit >= 1000) {
+        let bonus = (Number(deposit)*0.1)
+        setBonus(parseFloat(bonus).toFixed(2))
 
-      useEffect(() => {
-        getBalance();
-    }, [])
-
+        let newbal = Number(bal) + Number(deposit) + Number(bonus)
+          axios.post('/values/update', {balance: newbal}, { headers: auth.authHeader() }).then((res) => {
+                }).catch((err) => {
+                  console.log(err)
+                });
+                getBalance();
+                setShow(false);
+        }else if(deposit >= 100){
+          let bonus = (Number(deposit)*0.05)
+          setBonus(parseFloat(bonus).toFixed(2))
+  
+          let newbal = Number(bal) + Number(deposit) + Number(bonus)
+            axios.post('/values/update', {balance: newbal}, { headers: auth.authHeader() }).then((res) => {
+                  }).catch((err) => {
+                    console.log(err)
+                  });
+                  getBalance();
+                  setShow(false);
+        }else{
+          let newbal = Number(bal) + Number(deposit) + Number(bonus)
+          axios.post('/values/update', {balance: newbal}, { headers: auth.authHeader() }).then((res) => {
+                }).catch((err) => {
+                  console.log(err)
+                });
+                getBalance();
+                setShow(false);
+        };
+    }
     const getBalance = () => {
         axios.get('values', {headers: auth.authHeader() }).then((res) => {
-              setBal(res.data.balance)
+            setBal(parseFloat(res.data.balance).toFixed(2))
             }).catch((err) => {
             console.log(err)
           });
@@ -58,7 +82,7 @@ function DepositPage() {
   
     
   function clearForm() {
-    setDeposit("");
+    setDeposit('');
     setShow(true);
   }
 
@@ -75,7 +99,7 @@ function DepositPage() {
             Deposit Amount
             <br />
             <br />
-            <input type="input" className="form-control" id="deposit" placeholder="Deposit Amount"
+            <input type="input" className="form-control" id="deposit" placeholder="Take my money!"
               value={deposit} onChange={(e) => setDeposit(e.target.value)}
             />
             <br />
@@ -89,12 +113,15 @@ function DepositPage() {
           <>
             <h5>Deposit Success</h5>
             <br />
+            <h6>Bonus earned for this deposit: $ {bonus}</h6>
+            <br />
             <h5>You new account balance: $ {bal}</h5>
             <br />
             <button type="submit" className="btn btn-light mx-auto d-block"
               onClick={clearForm}>
               New Deposit
             </button>
+            <br />
           </>
         )
       }
