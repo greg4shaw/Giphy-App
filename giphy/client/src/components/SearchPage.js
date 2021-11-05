@@ -1,21 +1,19 @@
 import { useState } from "react";
 import axios from "axios";
-
 import { useAuth } from "./ProvideAuth";
-
-import '../styles/GifViewer.css'
+import Card from "./Card";
+import '../styles/StockViewer.css'
 
 function SearchPage() {
   const [input, setInput] = useState("");
   const [gifs, setGifs] = useState([]);
 
   const handleSearch = () => {
-    //console.log(input);
-    if (!input) return;
-
+    //if (!input) return;
     // https://api.giphy.com/v1/gifs/search?api_key=o5Njzr7fPXxqk7r11TGllOa0Cqj9vMgG&q=${input}&limit=10
-    axios.get(`gifs/search?input=${input}`, {headers: auth.authHeader()}).then((res) => {
-        console.log('new endpoint works')
+    //axios.get(`gifs/search?input=${input}`, {headers: auth.authHeader()}).then((res) => {
+    axios.get('gifs/search', {headers: auth.authHeader()}).then((res) => {
+        console.log(res.data)
         setGifs(res.data);
       }).catch((err) => {
         console.log(err)
@@ -26,24 +24,27 @@ function SearchPage() {
 
   const handleSave = (url) => {
         axios.post('gifs', { url }, {headers: auth.authHeader()})
-        console.log(auth.authHeader())
   };
 
   return (
+    <Card
+    bgcolor="dark"
+    header="Wall-Street-Bets"
+    title="Get the top 50 stocks discussed on Reddit subreddit - Wallstreetbets"
+    body={
     <div>
-      <input value={input} onChange={(e) => setInput(e.target.value)} />
-      <button onClick={handleSearch}>search</button>
+      <button type="submit" className="btn btn-light mx-auto d-block" onClick={handleSearch}>Get Em!</button>
+      <br/>
       <div className='gifs-container'>
-        {gifs.map((gif, index) => {
+        {gifs.map((data, key) => {
           return (
-            <div key={index} className='gifs-container' style={{ display: 'grid', alignContent: 'center' }}>
-              <img src={gif.images.fixed_width.url} />
-              <button onClick={() => handleSave(gif.images.fixed_width.url)}>save</button>
-            </div>
-          );
-        })}
+            <div key={key}>
+              {"Company Ticker: " + data.ticker + " | Comments: " + data.no_of_comments + " | Sentiment: " + data.sentiment}
+              </div>)})}
       </div>
     </div>
+    }
+    ></Card>
   );
 }
 

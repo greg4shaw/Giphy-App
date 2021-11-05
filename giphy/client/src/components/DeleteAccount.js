@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useAuth} from './ProvideAuth';
 import Card from "./Card";
@@ -6,27 +6,23 @@ import axios from "axios";
 
 function DeleteAccount() {
     const [show, setShow] = useState(true);
-    const [status, setStatus] = useState("");
+    const [status, setStatus] = useState('');
     const [reason, setReason] = useState('');
 
     let history = useHistory();
-    let location = useLocation();
     let auth = useAuth();
-  
-    let { from } = location.state || { from: { pathname: "/" } };
     
     const handleDelete = () => {
         axios.delete('/values/delete', { headers: auth.authHeader() }).then((res) => {
+              setShow(false)
               }).catch((err) => {
                 setStatus("This is not a valid account so it cannot be deleted.")
               });
-        setShow(false)
-        setStatus('');
       };
 
   return (
     <Card
-      bgcolor="success"
+      bgcolor="danger"
       header="DELETE ACCOUNT"
       status={status}
       body={
@@ -52,7 +48,7 @@ function DeleteAccount() {
             <h5>Your account has been deleted, we are sad to see you go :(</h5>
             <br />
             <button type="submit" className="btn btn-light mx-auto d-block"
-              onClick={auth.signout(() => history.push('/signup'))}>
+              onClick={() => {auth.signout(() => history.push('/'))}}>
               Create a new account
             </button>
           </>
@@ -60,7 +56,7 @@ function DeleteAccount() {
       }
     />
   );
-  }
+}
 
 export default DeleteAccount;
   

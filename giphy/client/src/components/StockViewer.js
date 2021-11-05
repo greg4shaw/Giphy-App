@@ -1,4 +1,4 @@
-import '../styles/GifViewer.css';
+import '../styles/StockViewer.css';
 
 const GifViewer = (props) => (
   <div className='gifs-container'>

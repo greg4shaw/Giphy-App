@@ -10,11 +10,7 @@ function WithdrawPage() {
     const [show, setShow] = useState(true);
     const [status, setStatus] = useState("");
 
-    let history = useHistory();
-    let location = useLocation();
     let auth = useAuth();
-  
-    let { from } = location.state || { from: { pathname: "/" } };
     
     function validateWithdraw(withdraw) {
       if (withdraw < 0) {
@@ -69,15 +65,16 @@ function WithdrawPage() {
   
     return (
       <Card
-        bgcolor="danger"
+        bgcolor="info"
         header="WITHDRAW"
         status={status}
         body={
           show ? (
             <>
+              <br />
               <h5>You account balance: $ {bal}</h5>
               <br />
-              Withdraw Amount
+              Withdraw Amount:
               <br />
               <br />
               <input type="input" className="form-control" id="deposit" placeholder="Give me money!"

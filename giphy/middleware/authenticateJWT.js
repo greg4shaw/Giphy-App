@@ -1,16 +1,11 @@
-// MIDDLEWARE @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 
 dotenv.config();
 const accessTokenSecret = process.env.JWT_SECRET;
-console.log(accessTokenSecret)
 
 const authenticateJWT = (req, res, next) => {
     const authHeader = req.headers.authorization;
-    console.log(`Headers: ${JSON.stringify(req.headers)}`);
-    console.log(`Body: ${JSON.stringify(req.body)}`);
     if (authHeader) {
         const token = authHeader.split(' ')[1];
 
@@ -18,7 +13,6 @@ const authenticateJWT = (req, res, next) => {
             if (err) {
                 return res.sendStatus(403);
             }
-
             req.user = user;
             next();
         });

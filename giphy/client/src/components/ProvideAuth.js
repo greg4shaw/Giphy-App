@@ -16,6 +16,5 @@ function ProvideAuth({ children }) {
     return useContext(authContext);
   }
   
-
 export { ProvideAuth, useAuth };
   

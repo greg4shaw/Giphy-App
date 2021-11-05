@@ -8,8 +8,8 @@ const UserSchema = new mongoose.Schema({
     },
     password: String,
     balance: Number,
-    gifs: [{type: mongoose.Schema.Types.ObjectId, ref: 'Gif'}],
-    values: [{type: mongoose.Schema.Types.ObjectId, ref: 'Amount'}]
+    //gifs: [{type: mongoose.Schema.Types.ObjectId, ref: 'Gif'}],
+    //values: [{type: mongoose.Schema.Types.ObjectId, ref: 'Amount'}]
 })
 
 UserSchema.pre("save", function (next) {
@@ -24,7 +24,6 @@ UserSchema.pre("save", function (next) {
                     if (hashError) {
                         return next(hashError);
                     }
-
                     user.password = hash;
                     next();
                 });

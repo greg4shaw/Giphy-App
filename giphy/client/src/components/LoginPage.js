@@ -50,10 +50,10 @@ function LoginPage() {
                 </button>
               </div>
             </>
-            }
+          }
         />
-            )
-        }
+      )
+    }
 
 export default LoginPage;
   

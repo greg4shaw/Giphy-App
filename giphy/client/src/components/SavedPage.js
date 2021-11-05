@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import { useAuth } from "./ProvideAuth";
-import '../styles/GifViewer.css'
+import '../styles/StockViewer.css'
 
 function SavedPage() {
     const auth = useAuth();

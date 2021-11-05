@@ -37,32 +37,3 @@ router.delete('/delete', (req, res) => {
 });
 
 export default router;
-
-// //Create
-// router.post('/', (req, res) => {
-//     console.log('ROUTE ' + req.body.username)
-//     //User.create({ user: req.user.id, balance: req.body.value }, (err, value) => {
-//     User.findOneAndUpdate({ username: req.username.id }, { balance: 99 }, (err, value) => {
-//         if (err) {
-//             console.log(err);
-//             res.send('value creation error')
-//         } else {
-//             res.send('successful value add');
-//             console.log(req.user.id)
-//         }
-//     })
-// });
-
-// // REPLACE
-
-// router.post('/replace', (req, res) => {
-// User.replaceOne({ user: req.user.id, value: req.body.value }, (err, value) => {
-//     if (err) {
-//         console.log(err);
-//         res.send('value creation error')
-//     } else {
-//         res.send('successful value add');
-//     }
-// })
-// });
-

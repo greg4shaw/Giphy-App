@@ -1,6 +1,6 @@
 import { React, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { useAuth} from './ProvideAuth';
+import { useAuth } from './ProvideAuth';
 import Card from "./Card";
 
 function CreateAccount() {
@@ -44,7 +44,6 @@ function CreateAccount() {
       if (!validatePassword(password, "password")) return;
 
       auth.signup(username, password).then(() => {
-        //history.replace(from);
         setStatus("")
         setShow(false);
       }).catch((err) => {
@@ -100,8 +99,7 @@ function CreateAccount() {
         }
       />
     );
-
-    }
+  }
     
 export default CreateAccount;
 

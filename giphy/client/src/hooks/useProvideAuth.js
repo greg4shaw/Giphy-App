@@ -9,7 +9,6 @@ function useProvideAuth() {
       return axios.post('auth/login', { username, password }).then((res) => {
         setUser(res.data.accessToken);
         setDisplayName(username)
-        console.log(username)
       })
     };
   

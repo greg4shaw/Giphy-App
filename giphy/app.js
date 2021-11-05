@@ -1,16 +1,11 @@
-//const express = require('express');
 import express from 'express';
-//import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
-//import dotenv from 'dotenv';
 import { URL } from 'url';
-
 import valueRouter from './routes/values.js'
 import gifRouter from './routes/gifs.js'
 import authRouter from './routes/auth.js'
 import authenticateJWT from './middleware/authenticateJWT.js'
-//dotenv.config();
-//console.log(process.env.MONGO_STRING)
+
 mongoose.connect(process.env.MONGO_STRING, { useNewUrlParser: true});
 
 const app = express();
@@ -29,8 +24,6 @@ app.use('/values', authenticateJWT, valueRouter )
 
 // creating the build files and saving them under client
 app.use(express.static(new URL('./client/build', import.meta.url).pathname))
-
-//console.log(new URL('./client/build', import.meta.url).pathname)
 
 // DEFAULT - any end point that is hit that is not /auth or /gifs then send a file back
 // this is the index.html file created when the build is done so it wont do anything locally

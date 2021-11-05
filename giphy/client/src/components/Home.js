@@ -7,9 +7,9 @@ function Home() {
     <Card
       bgcolor="primary"
       txtcolor="white"
-      header="WELCOME to the BAD BANK"
-      title="The baddest bank in town!"
-      text="Where we take you money and share your details."
+      header="WELCOME to the Fat Piggy Bank"
+      title="Deposit cash | Earn bonuses | Be as happy as a pig in..."
+      text="We are here to help you fatten your piggy."
       body={<img src={bank} className="img-fluid" alt="" />}
     />
   );

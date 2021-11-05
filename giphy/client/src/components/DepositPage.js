@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
 import { useAuth} from './ProvideAuth';
 import Card from "./Card";
 import axios from "axios";
@@ -11,11 +10,7 @@ function DepositPage() {
     const [show, setShow] = useState(true);
     const [status, setStatus] = useState("");
 
-    let history = useHistory();
-    let location = useLocation();
     let auth = useAuth();
-  
-    let { from } = location.state || { from: { pathname: "/" } };
     
     function validateDeposit(deposit) {
       if (deposit <= 0) {
@@ -89,14 +84,16 @@ function DepositPage() {
   return (
     <Card
       bgcolor="success"
-      header="DEPOSIT"
+      header="DEPOSIT & EARN A BONUS"
       status={status}
+      title="$100 or more gets you 5%. $1000 or more gets you 10%."
       body={
         show ? (
           <>
+            <br />
             <h5>You account balance: $ {bal}</h5>
             <br />
-            Deposit Amount
+            Deposit Amount:
             <br />
             <br />
             <input type="input" className="form-control" id="deposit" placeholder="Take my money!"
@@ -111,6 +108,7 @@ function DepositPage() {
           </>
         ) : (
           <>
+            <br />
             <h5>Deposit Success</h5>
             <br />
             <h6>Bonus earned for this deposit: $ {bonus}</h6>
