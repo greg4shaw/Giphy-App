@@ -1,4 +1,4 @@
-<h1><img src="./giphy/client/public/pigicon.png" alt="Full Stack Banking Application Project" width="25%"></h1>
+<h1><img src="./client/public/pigicon.png" alt="Full Stack Banking Application Project" width="25%"></h1>
 
 # The Fat Piggy Bank - Full Stack Application
 > MIT xPRO - Capstone Project
@@ -15,8 +15,8 @@ This app was build to learn to integrate various technologies to produce a usefu
 
 ## Screenshots
 
-<img src="./giphy/client/public/homePage.png" width="50%"/>
-<img src="./giphy/client/public/deposit.png" width="50%"/>
+<img src="./client/public/homePage.png" width="50%"/>
+<img src="./client/public/deposit.png" width="50%"/>
 
 ## Features and Improvements
 
