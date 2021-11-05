@@ -1,6 +1,6 @@
-<h1><img src="./giphy/client/public/pigicon.png" alt="Full Stack Banking Application Project" width="50%"></h1>
+<h1><img src="./giphy/client/public/pigicon.png" alt="Full Stack Banking Application Project" width="25%"></h1>
 
-# Full Stack Banking Application
+# The Fat Piggy Bank - Full Stack Application
 > MIT xPRO - Capstone Project
 
 This project was the final project in the MIT xPRO Full-Stack development course taken.
