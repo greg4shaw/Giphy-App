@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import { useAuth} from './ProvideAuth';
+import { useHistory } from 'react-router-dom';
+import { useAuth } from './ProvideAuth';
 import Card from "./Card";
 import axios from "axios";
 

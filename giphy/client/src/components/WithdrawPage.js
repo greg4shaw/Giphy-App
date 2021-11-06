@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useState } from 'react';
 import { useAuth} from './ProvideAuth';
 import Card from "./Card";
 import axios from "axios";
@@ -12,6 +11,16 @@ function WithdrawPage() {
 
     let auth = useAuth();
     
+    const getBalance = () => {
+      axios.get('values', {headers: auth.authHeader() }).then((res) => {
+          setBal(parseFloat(res.data.balance).toFixed(2))
+          }).catch((err) => {
+          console.log(err)
+        });
+    };
+
+    getBalance();
+
     function validateWithdraw(withdraw) {
       if (withdraw < 0) {
         setStatus(
@@ -50,19 +59,7 @@ function WithdrawPage() {
               getBalance();
               setShow(false);
       };
-
-      useEffect(() => {
-        getBalance();
-    }, [])
-
-    const getBalance = () => {
-        axios.get('values', {headers: auth.authHeader() }).then((res) => {
-            setBal(parseFloat(res.data.balance).toFixed(2))
-            }).catch((err) => {
-            console.log(err)
-          });
-    };
-  
+ 
     return (
       <Card
         bgcolor="info"

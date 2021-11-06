@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { useAuth} from './ProvideAuth';
+import { useState } from 'react';
+import { useAuth } from './ProvideAuth';
 import Card from "./Card";
 import axios from "axios";
 
@@ -12,6 +12,16 @@ function DepositPage() {
 
     let auth = useAuth();
     
+    const getBalance = () => {
+      axios.get('values', {headers: auth.authHeader() }).then((res) => {
+          setBal(parseFloat(res.data.balance).toFixed(2))
+          }).catch((err) => {
+          console.log(err)
+        });
+    };
+
+    getBalance();
+
     function validateDeposit(deposit) {
       if (deposit <= 0) {
         setStatus(
@@ -28,10 +38,6 @@ function DepositPage() {
       setTimeout(() => setStatus(""), 3000);
       return false;
     }
-
-    useEffect(() => {
-      getBalance();
-      }, [])
 
     const handleDeposit = () => {     
       if (!validateDeposit(deposit, "deposit")) return;
@@ -67,14 +73,7 @@ function DepositPage() {
                 setShow(false);
         };
     }
-    const getBalance = () => {
-        axios.get('values', {headers: auth.authHeader() }).then((res) => {
-            setBal(parseFloat(res.data.balance).toFixed(2))
-            }).catch((err) => {
-            console.log(err)
-          });
-    };
-  
+
     
   function clearForm() {
     setDeposit('');

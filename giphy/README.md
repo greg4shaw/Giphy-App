@@ -7,7 +7,7 @@ This project was the final project in the MIT xPRO Full-Stack development course
 
 ## Description
 
-This was a project to learn how to develop a full stack application who's end goal is to have a secure and functional banking platform. 
+This was a project to learn how to develop a full stack application with an end goal of having a secure and functional banking platform. 
 
 The app will help people who are in need of basic, but secure banking services. The app will however help the developer the most as he will need to have implemented many learnings to get the app up and running.
 
@@ -39,7 +39,7 @@ There are many improvements in the pipeline, such as:
 
 Clone the files that are in the Git Hub directory to your local machine.
 Open the terminal window in the respective cloned directory.
-Run the `npm install` command in the terminal window to ensure all the dependencies listed in the package.json file are installed.
+Run the `npm install` command in the terminal window to ensure all the dependencies listed in the package.json file are installed in both the root and client directories.
 Once that is complete, in the same terminal window, run the `npm start` command in both the root folder as well as the client folder.
 This is in order to launch the server side and client side.
 This will start the project on the following url http://localhost:3000/ 
@@ -55,6 +55,7 @@ The following technologies have been used in building this project:
 * MongoDB
 * Mongoose
 * JWT
+* Axios
 * bcrypt
 * CORS
 * Heroku

@@ -1,5 +1,5 @@
 import { React, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useAuth } from './ProvideAuth';
 import Card from "./Card";
 
@@ -11,10 +11,7 @@ function CreateAccount() {
     const [status, setStatus] = useState('');
 
     let history = useHistory();
-    let location = useLocation();
     let auth = useAuth();
-  
-    let { from } = location.state || { from: { pathname: "/" } };
     
     function validate(field, label) {
       if (!field) {
@@ -49,11 +46,6 @@ function CreateAccount() {
       }).catch((err) => {
         setStatus(`This user already exists, please Log In to access your account`);
       })
-    }
-    
-    function clearForm() {
-      history.replace(from)
-      setShow(true);
     }
     
     return (
