@@ -64,7 +64,9 @@ function DepositPage() {
                   getBalance();
                   setShow(false);
         }else{
+          setBonus(0)
           let newbal = Number(bal) + Number(deposit) + Number(bonus)
+          
           axios.post('/values/update', {balance: newbal}, { headers: auth.authHeader() }).then((res) => {
                 }).catch((err) => {
                   console.log(err)
@@ -74,8 +76,8 @@ function DepositPage() {
         };
     }
 
-    
   function clearForm() {
+    setBonus(0);
     setDeposit('');
     setShow(true);
   }
